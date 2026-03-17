@@ -37,6 +37,8 @@
 	"runArgs": [
 
 		// Allows container to access USB devices (needed for ST-Link)
-		"--privileged"
+		"--privileged",
+  		"-v", "/dev/bus/usb:/dev/bus/usb"
 	]
+
 }
