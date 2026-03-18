@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "STM32 Debug",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "openocd",
+      "cwd": "${workspaceFolder}",
+      "executable": "build/main.elf",
+      "configFiles": [
+        "interface/stlink.cfg",
+        "target/stm32f1x.cfg"
+      ],
+      "runToEntryPoint": "main",
+      "postLaunchCommands": [
+        "monitor reset init",
+        "load",
+        "break main",
+        "continue"
+      ],
+      "showDevDebugOutput": "raw",
+      "gdbPath": "/usr/bin/gdb-multiarch"
+    }
+  ]
+}
