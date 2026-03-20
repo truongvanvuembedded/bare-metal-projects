@@ -16,12 +16,12 @@ INCLUDES=-I../lib/drivers/Inc
 GDB = gdb-multiarch
 OPENOCD = openocd
 
-all:
+all: clean
 	mkdir -p build
 	$(CC) $(CFLAGS) $(INCLUDES) $(SRC) $(LDFLAGS) -o $(OUT).elf
 	arm-none-eabi-objcopy -O binary $(OUT).elf $(OUT).bin
 
-flash:
+flash: all
 	st-flash write build/main.bin 0x8000000
 
 clean:

@@ -7,6 +7,7 @@
       "request": "launch",
       "servertype": "openocd",
       "cwd": "${workspaceFolder}",
+      "preLaunchTask": "build-flash",
       "executable": "build/main.elf",
       "configFiles": [
         "interface/stlink.cfg",
