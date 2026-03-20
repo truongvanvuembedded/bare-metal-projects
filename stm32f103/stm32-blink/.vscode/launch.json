@@ -13,14 +13,8 @@
         "target/stm32f1x.cfg"
       ],
       "runToEntryPoint": "main",
-      "postLaunchCommands": [
-        "monitor reset init",
-        "load",
-        "break main",
-        "continue"
-      ],
       "showDevDebugOutput": "raw",
-      "gdbPath": "/usr/bin/gdb-multiarch"
+      "gdbPath": "/usr/bin/gdb-multiarch",
     }
   ]
 }

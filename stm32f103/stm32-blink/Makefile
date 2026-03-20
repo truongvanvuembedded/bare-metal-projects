@@ -12,6 +12,10 @@ SRC = src/main.c \
 OUT = build/main
 INCLUDES=-Idrivers/Inc
 
+# Debug tools
+GDB = gdb-multiarch
+OPENOCD = openocd
+
 all:
 	mkdir -p build
 	$(CC) $(CFLAGS) $(INCLUDES) $(SRC) $(LDFLAGS) -o $(OUT).elf
@@ -22,3 +26,33 @@ flash:
 
 clean:
 	rm -rf build
+
+# ================= DEBUG =================
+
+# 1. Run OpenOCD server
+debug-server:
+	$(OPENOCD) -f interface/stlink.cfg -f target/stm32f1x.cfg
+
+# 2. Run GDB client
+debug:
+	$(GDB) $(OUT).elf \
+	-ex "target remote localhost:3333" \
+	-ex "monitor reset init" \
+	-ex "break main" \
+	-ex "continue"
+
+# 3. One command run all (build + openocd + gdb)
+debug-all:
+	@echo "Building project..."
+	@mkdir -p build
+	$(CC) $(CFLAGS) $(INCLUDES) $(SRC) $(LDFLAGS) -o $(OUT).elf
+	arm-none-eabi-objcopy -O binary $(OUT).elf $(OUT).bin
+	@echo "Starting OpenOCD..."
+	$(OPENOCD) -f interface/stlink.cfg -f target/stm32f1x.cfg & \
+	sleep 2 && \
+	echo "Starting GDB..." && \
+	$(GDB) $(OUT).elf \
+	-ex "target remote localhost:3333" \
+	-ex "monitor reset init" \
+	-ex "break main" \
+	-ex "continue"

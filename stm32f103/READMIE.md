@@ -69,5 +69,5 @@ All examples have prepared makefiles.
 **Debugging:**
 1. Connect ST-link to PC.
 2. Connect ST-link to development board.
-3. Run `make openocd`.
+3. Run `make debug-all`.
 4. Open new terminal and run `make gdb`.
