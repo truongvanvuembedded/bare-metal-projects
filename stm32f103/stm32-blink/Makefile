@@ -4,13 +4,13 @@ LDFLAGS = -T linker/stm32f103.ld -nostdlib -nostartfiles
 
 SRC = src/main.c \
       startup/startup.c \
-      drivers/Src/Drv_GPIO.c \
-      drivers/Src/Drv_I2C.c \
-      drivers/Src/Drv_SPI.c \
-      drivers/Src/Drv_UART.c
+      ../lib/drivers/Src/Drv_GPIO.c \
+      ../lib/drivers/Src/Drv_I2C.c \
+      ../lib/drivers/Src/Drv_SPI.c \
+      ../lib/drivers/Src/Drv_UART.c
 	  
 OUT = build/main
-INCLUDES=-Idrivers/Inc
+INCLUDES=-I../lib/drivers/Inc
 
 # Debug tools
 GDB = gdb-multiarch
