@@ -27,6 +27,8 @@ RUN apt-get update && apt-get install -y \
     # Git is useful to clone repositories
     git \
     \
+    # Clang format
+    clang-format \
     # Clean package cache to reduce image size
     && rm -rf /var/lib/apt/lists/*
 
