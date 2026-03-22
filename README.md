@@ -64,10 +64,12 @@ docker run -it --rm \
     baremetal_project:latest
 ```
 
-### Using Dev Container for Build
+### Using Dev Container
 
 You can also use a **VSCode Dev Container** to build and work on this project without installing toolchains locally.
 
+For a step-by-step debugging guide, see:
+[Debug Guideline](./debug-guiline.md)
 
 ## 📂 Project Structure
 
