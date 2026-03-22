@@ -50,7 +50,7 @@ This project uses Docker to ensure a consistent and reproducible development env
 ### Build Docker image:
 
 ```bash
-docker build -t baremetal_project .
+docker build -t baremetal_project:latest ./.devcontainer/
 ```
 
 ### Run container:
@@ -59,8 +59,9 @@ docker build -t baremetal_project .
 docker run -it --rm \
     --privileged \
     -v ${PWD}:/workspace \
+    -v /dev/bus/usb:/dev/bus/usb \
     -w /workspace \
-    baremetal_project
+    baremetal_project:latest
 ```
 
 ### Using Dev Container for Build
