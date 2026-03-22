@@ -56,7 +56,11 @@ docker build -t baremetal_project .
 ### Run container:
 
 ```bash
-docker run --rm -it --privileged -v ${PWD}:/workspace baremetal_project
+docker run -it --rm \
+    --privileged \
+    -v ${PWD}:/workspace \
+    -w /workspace \
+    baremetal_project
 ```
 
 ### Using Dev Container for Build
@@ -70,41 +74,15 @@ You can also use a **VSCode Dev Container** to build and work on this project wi
 .
 ├── LICENSE
 ├── README.md
-└── stm32f103
-    └── stm32-blink
+├── .clang-format                  # Format rule
+├── drivers/
+│   ├── Inc/                       # Driver header files (Drv_GPIO.h, Drv_I2C.h, Drv_SPI.h, Drv_UART.h, stm32f103c8t6.h)
+│   └── Src/                       # Driver source files (Drv_GPIO.c, Drv_I2C.c, Drv_SPI.c, Drv_UART.c)
+└── stm32f103/
+    └── stm32-blink/
         ├── build/                 # Compiled output files (main.elf, main.bin)
-        ├── drivers/
-        │   ├── Inc/               # Driver header files (Drv_GPIO.h, Drv_I2C.h, Drv_SPI.h, Drv_UART.h, stm32f103c8t6.h)
-        │   └── Src/               # Driver source files (Drv_GPIO.c, Drv_I2C.c, Drv_SPI.c, Drv_UART.c)
         ├── linker/                # Linker script (stm32f103.ld)
         ├── Makefile               # Build system
         ├── src/                   # Application source code (main.c)
         └── startup/               # Startup code (startup.c, vector table)
 ```
-
----
-
-## ⚙️ Build Instructions
-
-### Compile the project:
-
-```bash
-make
-```
-
-Output files:
-
-* `build/main.elf` → ELF file (used for debugging)
-* `build/main.bin` → Binary file (used for flashing)
-
----
-
-## 🔥 Flash to Target
-
-```bash
-make flash
-```
-
-This uses `st-flash` to program the microcontroller via ST-Link.
-
----
