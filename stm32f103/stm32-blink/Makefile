@@ -56,3 +56,14 @@ debug-all:
 	-ex "monitor reset init" \
 	-ex "break main" \
 	-ex "continue"
+
+# ================= format =================
+.PHONY: format-project
+format-project:
+	find . \( -name "*.c" -o -name "*.h" \) -print0 | \
+	xargs -0 clang-format -i -style=file
+
+.PHONY: format-lib
+format-lib:
+	find ../lib/ \( -name "*.c" -o -name "*.h" \) -print0 | \
+	xargs -0 clang-format -i -style=file
