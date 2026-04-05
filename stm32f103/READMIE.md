@@ -57,16 +57,18 @@ Most of Linux distributions contain `stlink` toolset in their repository.
 
 ## Using Examples
 All examples have prepared makefiles.
+To implement a specific application file, use the `APP` variable followed by the filename (excluding the `.c` extension):
 
 **Building:**
-1. Run `make`.
+1. Run `make APP={specific_file}.c`.
+* Example: 'make APP=blink'
 
 **Writing program to main flash memory:**
 1. Connect ST-link to PC.
 2. Connect ST-link to development board.
-3. Run `make flash`.
+3. Run `make flash APP={specific_file}.c`.
 
 **Debugging:**
 1. Connect ST-link to PC.
 2. Connect ST-link to development board.
-3. Run `make debug-all`.
+3. Run `make debug-all APP={specific_file}.c`.`.

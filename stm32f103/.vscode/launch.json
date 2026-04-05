@@ -8,7 +8,7 @@
       "servertype": "openocd",
       "cwd": "${workspaceFolder}",
       "preLaunchTask": "build-flash",
-      "executable": "build/main.elf",
+      "executable": "build/${input:app_name}.elf",
       "configFiles": [
         "interface/stlink.cfg",
         "target/stm32f1x.cfg"
@@ -16,6 +16,14 @@
       "runToEntryPoint": "main",
       "showDevDebugOutput": "raw",
       "gdbPath": "/usr/bin/gdb-multiarch",
+    }
+  ],
+  "inputs": [
+    {
+      "id": "app_name",
+      "type": "promptString",
+      "description": "Enter the name of the file to be debugged (e.g., blink, log)",
+      "default": "main"
     }
   ]
 }
