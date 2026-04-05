@@ -25,6 +25,7 @@
 //	Header File
 //==================================================================================================
 #include <stdint.h>
+#include "system_tick.h"
 #include "Drv_GPIO.h"
 //==================================================================================================
 //	Local define
@@ -76,7 +77,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void SystemInit(void)
 {
-    // Typically, clock and hardware initialization code goes here.
+    /* Init system tick */
+    system_tick_init();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -108,6 +110,7 @@ int main(void)
     {
         /* Toggle Led */
         GPIO_ToggleOutputPin(GPIOB, GPIO_PIN_2);
-        DELAY(500000);
+        /* Blocking delay 500ms */
+        delay_ms(1000);
     }
 }

@@ -74,6 +74,7 @@ TARGET_SRC = src/$(APP).c
 
 # Library source files (startup code and device drivers)
 LIB_SRC = src/startup/startup.c \
+          src/lib/drivers/Src/system_tick.c \
           src/lib/drivers/Src/Drv_GPIO.c \
           src/lib/drivers/Src/Drv_I2C.c \
           src/lib/drivers/Src/Drv_SPI.c \
