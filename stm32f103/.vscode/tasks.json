@@ -13,5 +13,13 @@
       "problemMatcher": ["$gcc"],
       "detail": "Build project and flash STM32F103 using make flash"
     }
+  ],
+  "inputs": [
+    {
+      "id": "app_name",
+      "type": "promptString",
+      "description": "Enter the name of the file (e.g., blink, log)",
+      "default": "main"
+    }
   ]
 }
