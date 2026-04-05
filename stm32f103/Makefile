@@ -63,7 +63,7 @@ LDFLAGS = -T $(LINKER_SCRIPT) -nostdlib -nostartfiles
 # 5. INCLUDE PATHS
 #================================================================================
 # Include directory containing driver header files
-INCLUDES = -I src/lib/drivers/Inc
+INCLUDES = -I src/drivers/Inc
 
 
 #================================================================================
@@ -74,11 +74,11 @@ TARGET_SRC = src/$(APP).c
 
 # Library source files (startup code and device drivers)
 LIB_SRC = src/startup/startup.c \
-          src/lib/drivers/Src/system_tick.c \
-          src/lib/drivers/Src/Drv_GPIO.c \
-          src/lib/drivers/Src/Drv_I2C.c \
-          src/lib/drivers/Src/Drv_SPI.c \
-          src/lib/drivers/Src/Drv_UART.c
+          src/drivers/Src/system_tick.c \
+          src/drivers/Src/Drv_GPIO.c \
+          src/drivers/Src/Drv_I2C.c \
+          src/drivers/Src/Drv_SPI.c \
+          src/drivers/Src/Drv_UART.c
 
 # All source files combined (application + libraries)
 SRC = $(TARGET_SRC) $(LIB_SRC)
@@ -171,7 +171,7 @@ format-project:
 # format-lib: Format all C/H files in the library directory
 format-lib:
 	@echo "Formatting library files..."
-	@find ../lib/ \( -name "*.c" -o -name "*.h" \) -print0 | \
+	@find ../ \( -name "*.c" -o -name "*.h" \) -print0 | \
 	  xargs -0 clang-format -i -style=file
 	@echo "Formatting complete."
 
