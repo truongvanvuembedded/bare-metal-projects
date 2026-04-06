@@ -33,7 +33,7 @@
 //==================================================================================================
 //	Local define
 //==================================================================================================
-#define USART1_CR1              (*(volatile uint32_t *)0x4001380C)
+#define USART1_CR1 (*(volatile uint32_t*)0x4001380C)
 //==================================================================================================
 //	Local define I/O
 //==================================================================================================
@@ -100,11 +100,11 @@ void SystemInit(void)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(void)
 {
-	uartpin_init();
-	uart_init();
-	/* Init ring buffer */
-	RingBuffer_Init(&st_RingBuf_Send, u1_BufSend, sizeof(u1_BufSend));
-	RingBuffer_Init(&st_RingBuf_Rev, u1_BufRev, sizeof(u1_BufRev));
+    uartpin_init();
+    uart_init();
+    /* Init ring buffer */
+    RingBuffer_Init(&st_RingBuf_Send, u1_BufSend, sizeof(u1_BufSend));
+    RingBuffer_Init(&st_RingBuf_Rev, u1_BufRev, sizeof(u1_BufRev));
     /* Enable receive via IT for test receive data with send data via IT*/
     UART_ReceiveDataIT(&UART1Handle, &u1_Test, 1);
     while (1)
@@ -129,20 +129,20 @@ int main(void)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void uart_init(void)
 {
-	// Confige UART1
-	UART1Handle.pUARTx = USART1;
-	UART1Handle.UART_Config.BaudRate = UART_BAUDRATE_9600;
-	UART1Handle.UART_Config.DataFormat = UART_DATA_LEN_8BIT;
-	UART1Handle.UART_Config.ParityControl = UART_PARITY_DISABLE;
-	UART1Handle.UART_Config.StopbitLen = UART_STOP_BIT_1;
-	UART1Handle.UART_Config.UARTMode = UART_MODE_TXRX;
-	UART1Handle.UART_Config.HardwareFlowCtrl = UART_HARDWARE_FLOW_CTRL_DISABLE;
-	UART_Init(&UART1Handle);
+    // Confige UART1
+    UART1Handle.pUARTx = USART1;
+    UART1Handle.UART_Config.BaudRate = UART_BAUDRATE_9600;
+    UART1Handle.UART_Config.DataFormat = UART_DATA_LEN_8BIT;
+    UART1Handle.UART_Config.ParityControl = UART_PARITY_DISABLE;
+    UART1Handle.UART_Config.StopbitLen = UART_STOP_BIT_1;
+    UART1Handle.UART_Config.UARTMode = UART_MODE_TXRX;
+    UART1Handle.UART_Config.HardwareFlowCtrl = UART_HARDWARE_FLOW_CTRL_DISABLE;
+    UART_Init(&UART1Handle);
 
-	// Configure the IRQ priority 
-	UART_IRQInterruptConfig(UART_IRQ_INDEX_USART1, ENABLE);
-	// Confige the interrupt for UART peripheral at the NVIC
-	UART_IRQPriorityConfig(UART_IRQ_INDEX_USART1, 2);
+    // Configure the IRQ priority
+    UART_IRQInterruptConfig(UART_IRQ_INDEX_USART1, ENABLE);
+    // Confige the interrupt for UART peripheral at the NVIC
+    UART_IRQPriorityConfig(UART_IRQ_INDEX_USART1, 2);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -159,20 +159,20 @@ static void uart_init(void)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static void uartpin_init(void)
 {
-	// UART remap to config alternative funtion
-	AFIO->MAPR &= ~(1U << 2);
-	// Congif UART1 with Tx: A9 and Rx: A10
-	UARTPins.pGPIOx = GPIOA;
-	UARTPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_AF_PP;
-	UARTPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PUPD_NO_PULL;
-	UARTPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_HIGH;
-	// UART1_TX
-	UARTPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_9;
-	GPIO_Init(&UARTPins);
+    // UART remap to config alternative funtion
+    AFIO->MAPR &= ~(1U << 2);
+    // Congif UART1 with Tx: A9 and Rx: A10
+    UARTPins.pGPIOx = GPIOA;
+    UARTPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_AF_PP;
+    UARTPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PUPD_NO_PULL;
+    UARTPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_HIGH;
+    // UART1_TX
+    UARTPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_9;
+    GPIO_Init(&UARTPins);
     // UART1_RX (A10)
     UARTPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_10;
-    UARTPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_INPUT_FLOATING; // Change to Input for RX
-    UARTPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PUPD_NO_PULL; // Pull-up is safer
+    UARTPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_INPUT_FLOATING;  // Change to Input for RX
+    UARTPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PUPD_NO_PULL;  // Pull-up is safer
     GPIO_Init(&UARTPins);
 }
 /**
@@ -182,13 +182,13 @@ static void uartpin_init(void)
 void USART1_IRQHandler(void)
 {
     /* Register addresses for USART1 */
-    volatile uint32_t *SR  = (uint32_t *)0x40013800; // Status Register
-    volatile uint32_t *DR  = (uint32_t *)0x40013804; // Data Register
-    volatile uint32_t *CR1 = (uint32_t *)0x4001380C; // Control Register 1
+    volatile uint32_t* SR = (uint32_t*)0x40013800;   // Status Register
+    volatile uint32_t* DR = (uint32_t*)0x40013804;   // Data Register
+    volatile uint32_t* CR1 = (uint32_t*)0x4001380C;  // Control Register 1
 
     /* --- CASE 1: RECEIVE DATA (RXNE) --- */
     /* Bit 5 (RXNE): 1 -> Data is received and ready to be read */
-    if (*SR & (1 << 5)) 
+    if (*SR & (1 << 5))
     {
         /* Reading the DR register automatically clears the RXNE flag */
         U1 received_data = (U1)(*DR & 0xFF);
@@ -201,17 +201,17 @@ void USART1_IRQHandler(void)
 
     /* --- CASE 2: TRANSMIT DATA (TXE) --- */
     /* Bit 7 (TXE): 1 -> Transmit Data Register is empty */
-    if (*SR & (1 << 7)) 
+    if (*SR & (1 << 7))
     {
         U1 data_to_send;
 
         /* Check if the Send Ring Buffer has data to transmit */
-        if (u1_RingBuffer_Get_Data(&st_RingBuf_Send, &data_to_send) == 1) 
+        if (u1_RingBuffer_Get_Data(&st_RingBuf_Send, &data_to_send) == 1)
         {
             /* Writing to DR starts transmission and clears the TXE flag */
             *DR = (uint32_t)data_to_send;
         }
-        else 
+        else
         {
             /* No more data to send: Disable TXE interrupt to save CPU cycles */
             *CR1 &= ~(1 << 7);
@@ -233,18 +233,20 @@ void _putchar(char character)
      * Offset for CR1 is 0x0C, TXEIE is bit 7.
      * This triggers the IRQHandler to start processing the buffer.
      */
-    USART1_CR1 |= (1 << 7); 
+    USART1_CR1 |= (1 << 7);
 }
 /**
  * @brief  Disable all interrupts (Global) using Assembly.
  */
-static inline void __disable_irq(void) {
-    __asm volatile ("cpsid i" : : : "memory");
+static inline void __disable_irq(void)
+{
+    __asm volatile("cpsid i" : : : "memory");
 }
 
 /**
  * @brief  Enable all interrupts (Global) using Assembly.
  */
-static inline void __enable_irq(void) {
-    __asm volatile ("cpsie i" : : : "memory");
+static inline void __enable_irq(void)
+{
+    __asm volatile("cpsie i" : : : "memory");
 }
