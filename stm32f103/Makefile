@@ -63,7 +63,7 @@ LDFLAGS = -T $(LINKER_SCRIPT) -nostdlib -nostartfiles
 # 5. INCLUDE PATHS
 #================================================================================
 # Include directory containing driver header files
-INCLUDES = -I src/drivers/Inc
+INCLUDES = -Isrc/drivers/Inc -Isrc/common
 
 
 #================================================================================
@@ -78,7 +78,9 @@ LIB_SRC = src/startup/startup.c \
           src/drivers/Src/Drv_GPIO.c \
           src/drivers/Src/Drv_I2C.c \
           src/drivers/Src/Drv_SPI.c \
-          src/drivers/Src/Drv_UART.c
+          src/drivers/Src/Drv_UART.c \
+          src/common/ring_buffer.c \
+          src/common/printf.c
 
 # All source files combined (application + libraries)
 SRC = $(TARGET_SRC) $(LIB_SRC)
