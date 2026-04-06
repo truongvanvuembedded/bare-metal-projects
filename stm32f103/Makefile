@@ -80,7 +80,8 @@ LIB_SRC = src/startup/startup.c \
           src/drivers/Src/Drv_SPI.c \
           src/drivers/Src/Drv_UART.c \
           src/common/ring_buffer.c \
-          src/common/printf.c
+          src/common/printf.c \
+          src/common/button.c
 
 # All source files combined (application + libraries)
 SRC = $(TARGET_SRC) $(LIB_SRC)
